@@ -37,7 +37,15 @@ export class Memo {
 		this.ctx.fill();
 
 		this.ctx.beginPath();
-		this.ctx.fillStyle = 'yellow';
+		let grd: CanvasGradient = this.ctx.createLinearGradient(
+			this.location.x,
+			this.location.y,
+			this.location.x + this.size,
+			this.location.y + this.size,
+		);
+		grd.addColorStop(0, '#ffff00');
+		grd.addColorStop(1, '#cccc00');
+		this.ctx.fillStyle = grd;
 		this.ctx.moveTo(this.location.x, this.location.y);
 		this.ctx.lineTo(this.location.x + this.size - motionLength / 2, this.location.y);
 		this.ctx.lineTo(this.location.x + this.size - motionLength, this.location.y + this.size - motionLength);
@@ -47,7 +55,7 @@ export class Memo {
 
 		this.ctx.beginPath();
 		this.ctx.arc(this.location.x, this.location.y, 30, 0, Math.PI * 2, true);
-		const grd: CanvasGradient = this.ctx.createRadialGradient(
+		grd = this.ctx.createRadialGradient(
 			this.location.x + 10,
 			this.location.y - 10,
 			10,
