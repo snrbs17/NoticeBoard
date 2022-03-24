@@ -19,21 +19,18 @@ export class NoticeBoard {
 		const blankX = this.stageWidth / 10;
 		const blankY = this.stageHeight / 10;
 		this.ctx.beginPath();
-		this.ctx.moveTo(blankX, blankY);
-		this.ctx.lineTo(this.stageWidth - blankX, blankY);
-		this.ctx.lineTo(this.stageWidth - blankX, this.stageHeight - blankY);
-		this.ctx.lineTo(blankX, this.stageHeight - blankY);
-		this.ctx.closePath();
 		this.ctx.fillStyle = 'tomato';
+		this.ctx.fillRect(blankX, blankY, this.stageWidth - 2 * blankX, this.stageHeight - 2 * blankY);
 		this.ctx.fill();
 
 		this.ctx.beginPath();
-		this.ctx.moveTo(blankX + FRAME_WIDTH, blankY + FRAME_WIDTH);
-		this.ctx.lineTo(this.stageWidth - blankX - FRAME_WIDTH, blankY + FRAME_WIDTH);
-		this.ctx.lineTo(this.stageWidth - blankX - FRAME_WIDTH, this.stageHeight - blankY - FRAME_WIDTH);
-		this.ctx.lineTo(blankX + FRAME_WIDTH, this.stageHeight - blankY - FRAME_WIDTH);
-		this.ctx.closePath();
 		this.ctx.fillStyle = 'green';
+		this.ctx.fillRect(
+			blankX + FRAME_WIDTH,
+			blankY + FRAME_WIDTH,
+			this.stageWidth - 2 * (blankX + FRAME_WIDTH),
+			this.stageHeight - 2 * (blankY + FRAME_WIDTH),
+		);
 		this.ctx.fill();
 	}
 }

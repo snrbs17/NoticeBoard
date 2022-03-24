@@ -18,6 +18,12 @@ export class Memo {
 		this.ctx.beginPath();
 		this.ctx.fillStyle = 'yellow';
 		this.ctx.fillRect(this.location.x, this.location.y, this.size, this.size);
+		this.ctx.moveTo(this.location.x, this.location.y);
+		this.ctx.lineTo(this.location.x + this.size, this.location.y);
+		this.ctx.lineTo(this.location.x + this.size, this.location.y + this.size);
+		this.ctx.lineTo(this.location.x, this.location.y + this.size);
+		this.ctx.closePath();
+		this.ctx.fill();
 		this.ctx.beginPath();
 		this.ctx.arc(this.location.x, this.location.y, 30, 0, Math.PI * 2, true);
 		this.ctx.fillStyle = 'red';

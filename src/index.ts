@@ -1,6 +1,7 @@
 import { NoticeBoard } from './noticeBoard';
-import 'style.css';
+import Style from './style.module.css';
 import { Memo, location } from './memo';
+
 class App {
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
@@ -11,7 +12,7 @@ class App {
 
 	constructor() {
 		this.canvas = document.createElement('canvas');
-		this.canvas.setAttribute('style', 'background-color: #222');
+		this.canvas.setAttribute('style', 'width: 100%; height: 100%; background-color: #222');
 		this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
 		this.stageWidth = 0;

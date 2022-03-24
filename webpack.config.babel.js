@@ -1,5 +1,6 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 module.exports = {
 	entry: './src/index.ts',
@@ -9,10 +10,6 @@ module.exports = {
 	},
 	module: {
 		rules: [
-			{
-				test: /\.css$/i,
-				use: ['style-loader', 'css-loader'],
-			},
 			{
 				test: /[\.js]$/,
 				exclude: /node_module/,
@@ -28,6 +25,10 @@ module.exports = {
 				},
 			},
 			{
+				test: /\.css$/,
+				use: [MiniCssExtractPlugin.loader, 'css-loader'],
+			},
+			{
 				test: /\.jpeg$/,
 				use: [{ loader: 'file-loader' }],
 			},
@@ -41,6 +42,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: './index.html',
 		}),
+		new MiniCssExtractPlugin({ filename: 'app.css' }),
 	],
 	devServer: {
 		host: 'localhost',
