@@ -6,15 +6,20 @@ export class Memo {
 	ctx: CanvasRenderingContext2D;
 	location: location;
 	size: number;
+	path: Path2D;
 	constructor(ctx: CanvasRenderingContext2D, location: location, size: number) {
 		this.ctx = ctx;
 		this.location = location;
 		this.size = size;
+		this.path = new Path2D();
 	}
 
+	onclickHandler(x: number, y: number): void {
+		if (this.ctx.isPointInPath(this.path, x, y)) console.log('ai');
+	}
 	resize() {}
 
-	draw(time: number) {
+	draw(time: number): void {
 		const SHADOW_LENGTH: number = 2;
 		let motionSpeed: number = 0.002;
 		let motionLength = 3 + Math.sin(time * motionSpeed);
@@ -52,6 +57,12 @@ export class Memo {
 		this.ctx.lineTo(this.location.x, this.location.y + this.size - motionLength / 2);
 		this.ctx.closePath();
 		this.ctx.fill();
+
+		this.path.moveTo(this.location.x, this.location.y);
+		this.path.lineTo(this.location.x + this.size - motionLength / 2, this.location.y);
+		this.path.lineTo(this.location.x + this.size - motionLength, this.location.y + this.size - motionLength);
+		this.path.lineTo(this.location.x, this.location.y + this.size - motionLength / 2);
+		this.path.closePath();
 
 		this.ctx.beginPath();
 		this.ctx.arc(this.location.x, this.location.y, 30, 0, Math.PI * 2, true);
