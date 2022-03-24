@@ -42,7 +42,7 @@ class App {
 		// this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
 
 		this.noticeBoard.draw();
-		this.memo.draw();
+		this.memo.draw(t);
 
 		requestAnimationFrame(this.animate.bind(this));
 	}
