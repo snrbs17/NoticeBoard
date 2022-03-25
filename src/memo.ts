@@ -14,8 +14,9 @@ export class Memo {
 		this.path = new Path2D();
 	}
 
-	onclickHandler(x: number, y: number): void {
-		if (this.ctx.isPointInPath(this.path, x, y)) console.log('ai');
+	onclickHandler(x: number, y: number): string {
+		if (this.ctx.isPointInPath(this.path, x, y)) return 'ai';
+		return '';
 	}
 	resize() {}
 

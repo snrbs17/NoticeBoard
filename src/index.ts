@@ -1,11 +1,13 @@
 import { NoticeBoard } from './noticeBoard';
 import Style from './style.module.css';
 import { Memo, location } from './memo';
+import { Popup } from './popup';
 
 type eventController = {
 	x: number;
 	y: number;
-	state: 'run' | 'wait';
+	state: 'running' | 'pending' | 'wait';
+	content?: string;
 };
 class App {
 	canvas: HTMLCanvasElement;
@@ -14,6 +16,7 @@ class App {
 	stageHeight: number;
 	noticeBoard: NoticeBoard;
 	memo: Memo;
+	popup?: Popup;
 	showDocument: eventController;
 
 	constructor() {
@@ -41,7 +44,7 @@ class App {
 		if (!event) return;
 		const x = event.clientX;
 		const y = event.clientY;
-		this.showDocument = { x, y, state: 'run' };
+		if (this.showDocument.state == 'wait') this.showDocument = { x, y, state: 'pending' };
 	}
 
 	resize(): void {
@@ -58,9 +61,15 @@ class App {
 
 		this.noticeBoard.draw();
 		this.memo.draw(t);
-		if (this.showDocument.state == 'run') {
-			this.memo.onclickHandler(this.showDocument.x, this.showDocument.y);
-			this.showDocument.state = 'wait';
+		if (this.showDocument.state == 'pending') {
+			const selectedMemo: string = this.memo.onclickHandler(this.showDocument.x, this.showDocument.y);
+			if (!selectedMemo) {
+				this.showDocument.state = 'wait';
+			} else {
+				this.showDocument.content = selectedMemo;
+				this.popup = new Popup(selectedMemo);
+				this.showDocument.state = 'running';
+			}
 		}
 
 		requestAnimationFrame(this.animate.bind(this));
