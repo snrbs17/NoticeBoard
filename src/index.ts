@@ -23,6 +23,13 @@ class App {
 		this.canvas = document.createElement('canvas');
 		this.canvas.setAttribute('style', 'width: 100%; height: 100%; background-color: #222');
 		this.canvas.onclick = this.clickCanvas.bind(this);
+		this.canvas.addEventListener(
+			'closePopup',
+			() => {
+				this.showDocument.state = 'wait';
+			},
+			true,
+		);
 		this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
 		this.stageWidth = 0;
@@ -46,6 +53,7 @@ class App {
 		const y = event.clientY;
 		if (this.showDocument.state == 'wait') this.showDocument = { x, y, state: 'pending' };
 	}
+	popupEvent(event: MouseEvent): void {}
 
 	resize(): void {
 		this.stageWidth = window.innerWidth;
@@ -77,3 +85,5 @@ class App {
 }
 
 window.onload = () => new App();
+
+document.body.addEventListener('closePopup', () => console.log('body listened closePopup'));

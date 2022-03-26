@@ -1,6 +1,7 @@
 export class Popup {
 	memo: string;
 	article: HTMLElement;
+	exitButton: HTMLButtonElement;
 	constructor(memo: string) {
 		this.memo = memo;
 		this.article = document.createElement('article');
@@ -10,8 +11,20 @@ export class Popup {
 		);
 		this.article.innerHTML = memo;
 
-		document.body.append(this.article);
+		this.exitButton = document.createElement('button');
+		this.exitButton.setAttribute(
+			'style',
+			'width: 50px; height: 30px; position: absolute; right: 30px; top: 20px; z-index: 150;',
+		);
+		this.exitButton.innerHTML = 'x';
+		this.exitButton.onclick = this.closePopup.bind(this);
+		this.article.appendChild(this.exitButton);
+
+		document.body.appendChild(this.article);
 	}
 
-	draw() {}
+	closePopup() {
+		document.querySelector('canvas')?.dispatchEvent(new Event('closePopup', { bubbles: true }));
+		this.article.remove();
+	}
 }
