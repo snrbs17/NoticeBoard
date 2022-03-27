@@ -15,7 +15,7 @@ export class Memo {
 	}
 
 	onclickHandler(x: number, y: number): string {
-		if (this.ctx.isPointInPath(this.path, x, y)) return 'ai';
+		if (this.ctx.isPointInPath(this.path, x, y)) return 'AI';
 		return '';
 	}
 	resize() {}
