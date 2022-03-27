@@ -9,10 +9,11 @@ export class Popup {
 		this.wrapper = document.createElement('div');
 		this.wrapper.setAttribute(
 			'style',
-			'width: 1000px; height: 100vh; background-color: #cccccccc; z-index: 100; position: absolute; top: 0; margin: 0; padding: 0; display: flex;',
+			'width: 1000px; height: 100vh; background-color: #cccccccc; z-index: 100; position: absolute; top: 0; margin: 0; padding: 50px 150px; display: flex;',
 		);
-		this.article = document.createElement('article');
 
+		this.article = document.createElement('article');
+		this.article.setAttribute('style', 'width: 600px; height: 80vh; padding: 50px; background-color: yellow');
 		const rawFile = new XMLHttpRequest();
 		rawFile.open('GET', 'AI.html', true);
 		rawFile.onreadystatechange = () => {
@@ -35,6 +36,13 @@ export class Popup {
 		);
 		this.exitButton.innerHTML = 'x';
 		this.exitButton.onclick = this.closePopup.bind(this);
+		this.wrapper.addEventListener(
+			'click',
+			(event) => {
+				if (event.target !== this.article) this.closePopup();
+			},
+			false,
+		);
 		this.wrapper.appendChild(this.exitButton);
 
 		document.body.appendChild(this.wrapper);
