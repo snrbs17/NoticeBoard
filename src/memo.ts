@@ -7,7 +7,9 @@ export class Memo {
 	location: location;
 	size: number;
 	path: Path2D;
-	constructor(ctx: CanvasRenderingContext2D, location: location, size: number) {
+	name: string;
+	constructor(name: string, ctx: CanvasRenderingContext2D, location: location, size: number) {
+		this.name = name;
 		this.ctx = ctx;
 		this.location = location;
 		this.size = size;
@@ -15,7 +17,8 @@ export class Memo {
 	}
 
 	onclickHandler(x: number, y: number): string {
-		if (this.ctx.isPointInPath(this.path, x, y)) return 'AI';
+		console.log(this.name);
+		if (this.ctx.isPointInPath(this.path, x, y)) return this.name;
 		return '';
 	}
 	resize() {}
@@ -83,6 +86,6 @@ export class Memo {
 		this.ctx.beginPath();
 		this.ctx.fillStyle = 'black';
 		this.ctx.font = '100px serif';
-		this.ctx.fillText('AI', this.location.x + this.size / 4, this.location.y + this.size - 40);
+		this.ctx.fillText(this.name, this.location.x + this.size / 4, this.location.y + this.size - 40);
 	}
 }

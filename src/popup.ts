@@ -6,6 +6,20 @@ export class Popup {
 	constructor(memo: string) {
 		this.memo = memo;
 
+		const rawFile: XMLHttpRequest = new XMLHttpRequest();
+		rawFile.open('GET', `${this.memo}.html`, true);
+		rawFile.onreadystatechange = () => {
+			if (rawFile.readyState === 4) {
+				if (rawFile.status === 200 || rawFile.status == 0) {
+					const allText = rawFile.responseText;
+					this.createPopup(allText);
+				} else {
+					this.closePopup();
+				}
+			}
+		};
+		rawFile.send(null);
+
 		this.wrapper = document.createElement('div');
 		this.wrapper.setAttribute(
 			'style',
@@ -14,20 +28,6 @@ export class Popup {
 
 		this.article = document.createElement('article');
 		this.article.setAttribute('style', 'width: 600px; height: 80vh; padding: 50px; background-color: yellow');
-		const rawFile = new XMLHttpRequest();
-		rawFile.open('GET', 'AI.html', true);
-		rawFile.onreadystatechange = () => {
-			if (rawFile.readyState === 4) {
-				if (rawFile.status === 200 || rawFile.status == 0) {
-					const allText = rawFile.responseText;
-					console.log(allText);
-					this.article.innerHTML = allText;
-				}
-			}
-		};
-		rawFile.send(null);
-
-		this.wrapper.appendChild(this.article);
 
 		this.exitButton = document.createElement('button');
 		this.exitButton.setAttribute(
@@ -43,11 +43,15 @@ export class Popup {
 			},
 			false,
 		);
+	}
+
+	createPopup(allText: string) {
+		this.article.innerHTML = allText;
+		this.wrapper.appendChild(this.article);
 		this.wrapper.appendChild(this.exitButton);
 
 		document.body.appendChild(this.wrapper);
 	}
-
 	closePopup() {
 		document.querySelector('canvas')?.dispatchEvent(new Event('closePopup', { bubbles: true }));
 		this.wrapper.remove();

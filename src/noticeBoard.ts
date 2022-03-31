@@ -9,10 +9,10 @@ export class NoticeBoard {
 		this.stageHeight = stageHeight;
 	}
 
-	resize(stageWidth: number, stageHeight: number) {
-		this.stageWidth = stageWidth;
-		this.stageHeight = stageHeight;
-	}
+	// resize(stageWidth: number, stageHeight: number) {
+	// 	this.stageWidth = stageWidth;
+	// 	this.stageHeight = stageHeight;
+	// }
 
 	draw() {
 		const FRAME_WIDTH = this.stageWidth / 50;
